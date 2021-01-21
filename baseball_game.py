@@ -31,7 +31,7 @@ def is_digit(user_input_number):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-    result = None
+    result = user_input_number.isdigit()
 
     # ==================================
     return result
@@ -58,7 +58,7 @@ def is_between_100_and_999(user_input_number):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-    result = None
+    result = int(user_input_number) >= 100 and int(user_input_number)<1000
 
     # ==================================
     return result
@@ -87,7 +87,7 @@ def is_duplicated_number(three_digit):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
 
-    result = None
+    result = (len(set(three_digit)) == 3)
     # ==================================
     return result
 
@@ -114,8 +114,11 @@ def is_validated_number(user_input_number):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-
-    result = None
+    result = False
+    if is_digit(user_input_number):
+        if is_between_100_and_999(user_input_number):
+            if is_duplicated_number(user_input_number):
+                result = True
     # ==================================
     return result
 
@@ -141,8 +144,12 @@ def get_not_duplicated_three_digit_number():
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
     # get_random_number() 함수를 사용하여 random number 생성
+    while True:
+        number = get_random_number()
+        if is_validated_number(str(number)):
+            break
 
-    result = None
+    result = number
     # ==================================
     return result
 
@@ -174,8 +181,21 @@ def get_strikes_or_ball(user_input_number, random_number):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
+    strike = 0
+    ball = 0
+    for i, r in zip(user_input_number, random_number):
+        if i == r:
+            strike += 1
 
-    result = None
+    for i in range(3):
+        for j in range(3):
+            if i == j:
+                continue
+            else:
+                if user_input_number[i] == random_number[j]:
+                    ball += 1
+    
+    result = [strike, ball]
     # ==================================
     return result
 
@@ -206,8 +226,10 @@ def is_yes(one_more_input):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-
-    result = None
+    if one_more_input.lower() == 'y' or one_more_input.lower() == 'yes':
+        result = True
+    else:
+        result = False
     # ==================================
     return result
 
@@ -239,7 +261,10 @@ def is_no(one_more_input):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
 
-    result = None
+    if one_more_input.lower() == 'n' or one_more_input.lower() == 'no':
+        result = True
+    else:
+        result = False
     # ==================================
     return result
 
