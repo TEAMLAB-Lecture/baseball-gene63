@@ -87,7 +87,7 @@ def is_duplicated_number(three_digit):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
 
-    result = (len(set(three_digit)) == 3)
+    result = (len(set(three_digit)) != 3)
     # ==================================
     return result
 
@@ -117,7 +117,7 @@ def is_validated_number(user_input_number):
     result = False
     if is_digit(user_input_number):
         if is_between_100_and_999(user_input_number):
-            if is_duplicated_number(user_input_number):
+            if not is_duplicated_number(user_input_number):
                 result = True
     # ==================================
     return result
@@ -187,8 +187,8 @@ def get_strikes_or_ball(user_input_number, random_number):
         if i == r:
             strike += 1
 
-    for i in range(3):
-        for j in range(3):
+    for i in range(len(user_input_number)):
+        for j in range(len(random_number)):
             if i == j:
                 continue
             else:
@@ -276,7 +276,41 @@ def main():
     print("Random Number is : ", random_number)
     # ===Modify codes below=============
     # 위의 코드를 포함하여 자유로운 수정이 가능함
+    while True:
+        user_input = input('Input guess number : ')
+        if user_input == '0':
+            break
+        if is_validated_number(user_input):
+            sb = get_strikes_or_ball(user_input, random_number)
+            print(f"Strikes : {sb[0]} , Balls : {sb[1]}")        
+            if sb[0] == 3:
+                while True:
+                    yn = input("You win, one more(Y/N)?")
+                    if is_yes(yn) or is_no(yn):
+                        if is_yes(yn):
+                            random_number = str(get_not_duplicated_three_digit_number())
+                            print("Random Number is : ", random_number)
+                            end = False
+                            break
+                        else:
+                            end = True
+                            break
+                    else:
+                        print("Wrong Input, Input again")
+                        continue
 
+            else:
+                continue
+        else:
+            print("Wrong Input, Input again")
+            continue
+
+        if end :
+            break
+        else :
+            continue
+    
+    
 
     # ==================================
     print("Thank you for using this program")
